@@ -1,0 +1,73 @@
+﻿@model CafateriaSystem.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+    <div class="text-white">
+        <h4>Order No: @Html.DisplayFor(model => model.order_id) </h4>
+        <hr />
+
+       
+        <dl class="dl-horizontal">
+            
+            <dt>
+                Order Date : @String.Format("{0:dd/MM/yyyy}", Model.order_date)
+            </dt>
+
+            <dt>
+                Order Time : @Html.DisplayFor(model => model.order_time)
+            </dt>
+
+            <dt>
+                Deliver Method : @Html.DisplayFor(model => model.deliver_method)
+            </dt>
+
+
+            <dt>
+                Order Status : @Html.DisplayFor(model => model.order_status)
+            </dt>
+            
+            <hr />
+
+            <label> Customer Details</label>
+          
+            <dt>
+                Customer Name : @Html.DisplayFor(model => model.User.name)
+            </dt>
+
+            <dt>
+                Customer Address : @Html.DisplayFor(model => model.User.address)
+            </dt>
+
+            <dt>
+                Customer Email : @Html.DisplayFor(model => model.User.email)
+            </dt>
+
+            <dt>
+                Customer Phone : @Html.DisplayFor(model => model.User.phone)
+            </dt>
+
+
+        </dl>
+    </div>
+<label>  </label>
+<table class="table-bordered">
+    <tr>
+        <th> Item </th>
+        <th> Quantity </th>
+    </tr>
+    @foreach (var item in Model.OrderDetails)
+    {
+        <tr>
+            <td>@item.item_name</td>
+            <td>@item.item_quantity</td>
+        </tr>
+
+    }
+</table>
+

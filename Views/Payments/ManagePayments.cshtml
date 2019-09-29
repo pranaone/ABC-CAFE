@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<CafateriaSystem.Models.Payment>
+@using PagedList.Mvc;
+
+<hr />
+@using (Html.BeginForm("AdminPanel", "Users", FormMethod.Get))
+{
+    <p>
+        Find by status @Html.TextBox("SearchPayment", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            Bill No
+        </th>
+        <th>
+            Confirmation No
+        </th>
+        <th>
+            Payment Amount
+        </th>
+        <th>
+            Payment Status
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.bill_number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.confirmation_number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bill_value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment_status)
+            </td>
+        </tr>
+
+    }
+
+</table>
+
+<hr />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@if (Model.PageCount > 1)
+{
+    <div class="pagination justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("AdminPaymentsPanel", "Users", new { page }))
+    </div>
+}
+

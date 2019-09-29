@@ -1,0 +1,51 @@
+﻿@model CafateriaSystem.Models.Menu
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="col-md-6" style=" text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; background-color: rgba(242, 242, 242,0.3)">
+        <hr />
+        <strong> Are you sure you want to delete this item? </strong>
+        <hr />
+        <div>
+            <dl class="dl-horizontal">
+
+                <dd>
+                    <strong> Style : </strong> @Html.DisplayFor(model => model.menu_category)
+                </dd>
+
+                <dd>
+                    <strong> Category : </strong> @Html.DisplayFor(model => model.sub_catergory)
+                </dd>
+
+                <dd>
+                    <strong> Name : </strong> @Html.DisplayFor(model => model.name)
+                </dd>
+
+                <dd>
+                    <strong> Description : </strong> @Html.DisplayFor(model => model.description)
+                </dd>
+
+                <dd>
+                    <strong> Price : </strong> @Html.DisplayFor(model => model.price)
+                </dd>
+
+                <dd>
+                    <strong> Quantity : </strong>  @Html.DisplayFor(model => model.quantity)
+                </dd>
+            </dl>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a href="@Url.Action("AdminMenuPanel", "Users")" class="btn btn-primary"> Back </a>
+            </div>
+        }
+    <br />
+    </div>

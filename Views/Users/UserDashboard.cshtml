@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "UserDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" style="background-color:ghostwhite; margin-top:25px; padding:0; background-color: rgba(242, 242, 242,0)">
+    <div class="row d-flex justify-content-center" style="min-height:50px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3); color:darkorange; text-shadow:5px 5px 5px #000000; border:1px solid black;" id="TitleBar">
+        <h1>
+            @if (Session["UserName"] != null)
+            {<text> Welcome @Session["UserName"].ToString() !! </text>}
+        </h1>
+    </div>
+
+
+    <div class="row d-flex justify-content-center" style="min-height:20px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3); font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black; ">
+        <b>Account Information</b>
+    </div>
+
+    <div class="row" style="min-height:100px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3)">
+        <div class="col-md-8" style=" text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black;">
+            <label>
+                <b> Name : </b> @Session["UserName"].ToString()
+                <br />
+                <b> Email : </b> @Session["UserEmail"].ToString()
+                <br />
+                <b> Contact : </b> @Session["UserPhone"].ToString()
+                <br />
+                <b> Location : </b> @Session["UserLocation"].ToString()
+
+            </label>
+        </div>
+
+
+        <div class="col-md-4" style=" text-align:center; align-content:center; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black;">
+            <hr />
+            @Html.ActionLink("Update Profile","EditUser","Users", new { id = Session["UserID"]},null)
+            <hr />
+            @Html.ActionLink("Sign Out","SignOut","Users", null, new { onclick = "return confirm ('Are you sure you want to sign out?');"}) 
+            <hr />
+        </div>
+
+    </div>
+
+    <div class="row d-flex justify-content-center" style="min-height:20px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3); font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black; ">
+        <b>Order Information</b>
+    </div>
+
+    <div class="row" style="min-height:40px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.5)">
+
+        <br />
+        @Html.Action("CustomerLastOrder", "Orders", new { custid = Session["UserID"] })
+        <br />
+
+
+    </div>
+
+    <div class="row d-flex justify-content-center" style="min-height:20px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3); font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black; ">
+        <b>Order History</b>
+    </div>
+
+
+        @*--------------------------------------Order History Items should load here with the current format--------------------------------------------------*@
+
+       @Html.Action("CustomerHistory","Orders", new {custid = Session["UserID"] })
+
+        @*--------------------------------------Order History Items should load here with the current format--------------------------------------------------*@
+
+      
+
+</div>
+@if (TempData["Message"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@TempData["Message"].ToString()");
+        };
+    </script>
+}

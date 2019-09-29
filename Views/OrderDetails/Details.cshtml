@@ -1,0 +1,51 @@
+﻿@model CafateriaSystem.Models.OrderDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.item_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.item_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.item_quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.item_quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Menu.menu_category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Menu.menu_category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.deliver_method)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order.deliver_method)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

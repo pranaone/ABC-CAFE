@@ -1,0 +1,95 @@
+﻿@model CafateriaSystem.Models.Menu
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  
+            <div class="col-md-4" style=" text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; background-color: rgba(242, 242, 242,0.3)">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        <strong> Add Menu Item</strong>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label> Style </label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.menu_category,
+                                 new List<SelectListItem>
+                                 {
+                            new SelectListItem { Value = "Sri Lankan" , Text = "Sri Lankan" },
+                            new SelectListItem { Value = "Chinese" , Text = "Chinese" }}, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.menu_category, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Category </label>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.sub_catergory,
+                                 new List<SelectListItem>
+                                 {
+                            new SelectListItem { Value = "Snacks" , Text = "Snacks" },
+                            new SelectListItem { Value = "Beverages" , Text = "Beverages" },
+                            new SelectListItem { Value = "Deserts" , Text = "Deserts"},
+                            new SelectListItem { Value = "Main" , Text = "Main"}
+                                 }, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.sub_catergory, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Name</label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Description </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Price </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control",} })
+                                @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Quantity </label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control", min = 1 } })
+                                @Html.ValidationMessageFor(model => model.quantity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-success" />
+                                <a href="@Url.Action("AdminMenuPanel", "Users")" class="btn btn-primary"> Back </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                 
+            <br />
+
+            </div>
+              
+@section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+        

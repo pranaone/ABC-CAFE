@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-white">Payment Success</h2>
+
+@{ var orderid = Request.QueryString["guid"];
+    var payerid = Request.Params["PayerID"];
+    var billno = Request.Params["paymentID"];
+    var confirmationno = Request.Params["token"];
+    var amount = TempData["Payment"];
+}
+
+<hr />
+
+<div class="text-white">
+
+    <h4> Payment Details </h4>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Paypal ID : @payerid
+        </dt>
+
+        <dt>
+            Bill No : @billno
+        </dt>
+
+        <dt>
+            Confirmation No : @confirmationno
+        </dt>
+
+        <dt>
+            Payment Amount : @amount
+        </dt>
+    </dl>
+
+</div>
+
+@Html.Action("SavePayment","Payments", new {billno = billno, custid = payerid, orderid = orderid, bilval = amount, confirmno = confirmationno })
+
+@Html.Action("OrderDetailsPartial", "Orders", new { id = orderid })
+
+<hr />
+
+@Html.Action("SendOrderEmail", "Email", new { receptientEmail = Session["UserEmail"].ToString(), emailSubject = "ABC Cafe - Order Information",
+    emailBody = @String.Format("<div> Thank you for ordering !! <br /> Order Details Given Below <br /> OrderID : {0} <br /> Bill No : {1} <br /> Confirmation No : {2} <br /> Amount : {3} <br /> </div>",
+    orderid, billno, confirmationno, amount) })
+
+<a class="btn btn-danger" href="@Url.Action("CancelOrder","Orders", new { id = orderid })">Cancel Order</a>
+<br />
+<a class="btn btn-danger" href="@Url.Action("UserDashboard","Users")">Back to Dashboard</a>

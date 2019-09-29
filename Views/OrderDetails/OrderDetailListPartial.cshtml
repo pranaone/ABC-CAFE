@@ -1,0 +1,10 @@
+﻿@model IEnumerable<CafateriaSystem.Models.OrderDetail>
+
+
+@foreach (var item in Model)
+{
+    <label> @item.item_name </label>
+    <br />
+    <label> : @item.item_quantity Nos </label>
+    <br />
+}

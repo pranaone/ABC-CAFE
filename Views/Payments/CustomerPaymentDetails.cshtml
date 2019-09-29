@@ -1,0 +1,32 @@
+﻿@model CafateriaSystem.Models.Payment
+
+@{
+    ViewBag.Title = "CustomerPaymentDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-6" style=" text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; background-color: rgba(242, 242, 242,0.3)">
+    <hr />
+    <strong>Order Payment Details</strong>
+    <hr />
+    <div>
+        <dl class="dl-horizontal">
+
+            <dd>
+                <strong> Bill No : </strong> @Html.DisplayFor(model => model.bill_number)
+            </dd>
+
+            <dd>
+                <strong> Bill Value : </strong> @Html.DisplayFor(model => model.bill_value)
+            </dd>
+
+            <dd>
+                <strong> Confirmation No : </strong> @Html.DisplayFor(model => model.confirmation_number)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        <a href="@Url.Action("UserDashboard", "Users")" class="btn btn-primary"> Back </a>
+    </p>
+    <br />
+</div>

@@ -1,0 +1,142 @@
+﻿@model IEnumerable<CafateriaSystem.Models.Menu>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*Insert Menu Items*@
+<div class="row" id="FlagRow">
+    <div class="col-6" id="SriLankanMenuButton">
+        <a href="@Url.Action("Index","Menus", new {page=1, category = "Sri Lankan"})" style="color:white; text-decoration:none;">Sri Lankan</a>
+    </div>
+    <div class="col-6" id="ChineseMenuButton">
+        <a href="@Url.Action("Index","Menus", new {page=1, category = "Chinese"})" style="color:white; text-decoration:none;">Chinese</a>
+    </div>
+</div>
+
+<div class="row" id="CheckoutAndLocation">
+    <div class="col-12" id="CheckoutButton">
+        <a class="container" href="@Url.Action("CheckOut","ShoppingCart")" style="min-width:100%;">View Cart</a>
+    </div>
+</div>
+
+<div class="container" id="MenuBody" style="height:100%; margin-top:25px;">
+    <div class="row">
+        <div class="col-md-3" id="MenuButtons" style="border:2px solid black;">
+            <div class="row" style="border:1px solid black; height:150px;"> <a href="@Url.Action("Index","Menus", new {page=1, category = "Beverages"})">Beverages</a></div>
+            <div class="row" style="border:1px solid black; height:150px;"> <a href="@Url.Action("Index","Menus", new {page=1, category = "Main"})">Main</a></div>
+            <div class="row" style="border:1px solid black; height:150px;"> <a href="@Url.Action("Index","Menus", new {page=1, category = "Snacks"})">Snacks</a></div>
+            <div class="row" style="border:1px solid black; height:150px;"> <a href="@Url.Action("Index","Menus", new {page=1, category = "Deserts"})">Deserts</a></div>
+        </div>
+        <div class="col-md-9" id="MenuContents" style="border:1px solid black;">
+            <div class="container" style="height:500px;">
+
+                @Html.Action("MenuListPartial", "Menus")
+
+            </div>
+       
+        </div>
+    </div>
+</div>
+
+<div id="map"> </div>
+
+<style>
+    #FlagRow {
+        min-height: 100px;
+        border: 1px solid black;
+    }
+
+    #map {
+        height: auto;
+        width: auto;
+        margin: auto;
+    }
+
+    #CheckoutAndLocation {
+        min-height: 75px;
+        border: 1px solid black;
+    }
+
+    #SriLankanMenuButton {
+        background-image: url(../../Content/SLFlag.jpg);
+        border-right: 1px solid black;
+        background-size: cover;
+        font-size: 50px;
+        text-align: center;
+        padding: 7px;
+    }
+
+    #ChineseMenuButton {
+        background-image: url(../../Content/ChineseFlag.jpg);
+        background-size: cover;
+        font-size: 50px;
+        text-align: center;
+        padding: 7px;
+    }
+
+    #MenuBody {
+        background-color: ghostwhite;
+        height: 1080px;
+        opacity: 0.9;
+    }
+
+    #MenuButtons div a {
+        color: white;
+        text-decoration: none;
+        font-size: 30px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-image: url(../../Content/ButtonBackground.jpg);
+        background-size: cover;
+        text-align: center;
+        min-width: 100%;
+        padding-top: 50px;
+    }
+
+    #LocationTextBox input {
+        opacity: 0.5;
+        background-size: auto;
+        min-width: 100%;
+        min-height: 100%;
+        margin: 0px;
+        padding: 0px;
+        text-align: center;
+    }
+
+    ::-webkit-input-placeholder {
+        color: black;
+        font-size: larger;
+    }
+
+    #CheckoutButton {
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+    }
+
+        #CheckoutButton a {
+            font-size: larger;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            background-image: url(../../Content/ButtonBackground.jpg);
+            display: block;
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            padding-top: 20px;
+            text-decoration: none;
+        }
+
+    #MenuPageination a {
+        color: black;
+        font-size: larger;
+        font-family: Arial, Helvetica, sans-serif;
+        background-image: url(../../Content/ButtonBackground.jpg);
+        border-color: orangered;
+    }
+</style>

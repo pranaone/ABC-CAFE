@@ -1,0 +1,102 @@
+﻿@model CafateriaSystem.Models.Order
+
+    <div class="text-white">
+        <hr />
+
+        <h4> Order Details </h4>
+
+        <hr />
+
+        <dl class="dl-horizontal">
+            <dt>
+                Order No: @Html.DisplayFor(model => model.order_id)
+            </dt>
+
+            <dt>
+                Order Date : @String.Format("{0:dd/MM/yyyy}", Model.order_date)
+            </dt>
+
+            <dt>
+                Order Time : @Html.DisplayFor(model => model.order_time)
+            </dt>
+
+            <dt>
+                Deliver Method : @Html.DisplayFor(model => model.deliver_method)
+            </dt>
+
+            <dt>
+                Order Status : @Html.DisplayFor(model => model.order_status)
+            </dt>
+
+        </dl>
+
+        <hr />
+
+        <table class="table-bordered border-light text-white text-center">
+            <tr>
+                <th> Item </th>
+                <th> Quantity </th>
+            </tr>
+            @foreach (var item in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@item.item_name</td>
+                    <td>@item.item_quantity</td>
+                </tr>
+
+            }
+
+        </table>
+
+        <hr />
+
+
+        @if (Model.User.user_id != 6)
+        {
+            <h4> Customer Details </h4>
+
+            <hr />
+
+            <dl class="dl-horizontal">
+
+                <dt>
+                    Customer Name : @Html.DisplayFor(model => model.User.name)
+                </dt>
+
+                <dt>
+                    Customer Email : @Html.DisplayFor(model => model.User.email)
+                </dt>
+
+                <dt>
+                    Customer Phone : @Html.DisplayFor(model => model.User.phone)
+                </dt>
+
+            </dl>
+
+        }
+        else
+        {
+            <dl class="dl-horizontal">
+
+                <dt>
+                    Customer Name : @Session["UserName"].ToString()
+                </dt>
+
+                <dt>
+                    Customer Email : @Session["UserEmail"].ToString()
+                </dt>
+
+                <dt>
+                    Customer Phone : @Session["UserPhone"].ToString()
+                </dt>
+
+            </dl>
+
+        }
+
+
+    </div>
+
+
+
+    

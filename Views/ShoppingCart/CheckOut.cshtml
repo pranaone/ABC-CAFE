@@ -1,0 +1,378 @@
+﻿@using CafateriaSystem.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*Insert Menu Items*@
+<div class="row" id="FlagRow">
+    <div class="col-6" id="SriLankanMenuButton">
+        <a href="@Url.Action("Index","Menus", new {page=1, category = "Sri Lankan"})" style="color:white; text-decoration:none;">Sri Lankan</a>
+    </div>
+    <div class="col-6" id="ChineseMenuButton">
+        <a href="@Url.Action("Index","Menus", new {page=1, category = "Chinese"})" style="color:white; text-decoration:none;">Chinese</a>
+    </div>
+</div>
+
+<div class="container-fluid" style="background-color:ghostwhite; margin-top:25px; padding:0; background-color: rgba(242, 242, 242,0)">
+    <div class="row" style="min-height:50px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.5)" id="TitleBar">
+        <div class="col col-md-7" style="text-align:left;">
+            <h4>Item</h4>
+        </div>
+        <div class="col col-md-2" style="border-left:0px;">
+            <h4>Quantity</h4>
+        </div>
+        <div class="col col-md-3" style="border-left:0px;">
+            <h4>Amount</h4>
+        </div>
+    </div>
+
+    @{
+        var GoogleApi = "";
+        var userName = "Guest User";
+        var userPhone = "Mobile Number";
+        var userEmail = "you@mail.com";
+        var userLocation = "Bambalapitiya";
+        var userID = 6;
+
+
+        if (Session["UserID"]!= null)
+        {
+            userID = Convert.ToInt32(Session["UserID"]);
+        }
+
+        if(Session["UserName"] != null)
+        {
+            userName = Session["UserName"].ToString();
+        }
+
+        if(Session["UserPhone"] != null)
+        {
+            userPhone = Session["UserPhone"].ToString();
+        }
+
+        if (Session["UserEmail"] != null)
+        {
+            userEmail = Session["UserEmail"].ToString();
+        }
+
+        if (Session["UserAddress"] != null)
+        {
+            userLocation = Session["UserLocation"].ToString();
+        }
+
+    }
+
+    @{
+        if (Session["Cart"] != null)
+        {
+
+            using (Html.BeginForm("UpdateCart", "ShoppingCart", FormMethod.Post))
+            {
+                foreach (var cart in (List<Cart>)Session["Cart"])
+                {
+
+                    <div class="row" style="min-height:40px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.5)">
+                        <div class="col col-md-7" style="text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black;">
+                            @cart.Menu.name (Price:  @cart.Menu.price) @Html.ActionLink("Remove", "Delete", "ShoppingCart", new { id = cart.Menu.menu_id },
+new { onclick = "return confirm ('Are you sure you want to remove this item?');" })
+                        </div>
+                        <div class="col col-md-2 d-flex justify-content-center" style="font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border: 1px solid black; border-left:0px;">
+                            <input type="number" name="quantity" id="quantity" value="@cart.Quantity" min="1" max="@cart.Menu.quantity" style="max-width:90px; background-color: rgba(204, 204, 204,0.5); border-left:1px solid grey; border-right:1px solid grey;" />
+                        </div>
+                        <div class="col col-md-3" style="border-left:0px; font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border: 1px solid black; border-left:0px;">
+
+                            @(cart.Menu.price * cart.Quantity)
+                            <br />
+
+                        </div>
+                    </div>
+                }
+
+                <div class="row" style="min-height:50px; margin:0; padding:0; border:2px solid black; background-color: rgba(242, 242, 242,0.5)" id="CheckoutBar">
+                    <div class="col col-md-7">
+
+                        <div style="text-align:left; border:hidden;">
+                            Customer Name :
+                            <br />
+                            <input type="text" id="userName" name="userName" value="@userName " style="background-color: rgba(242, 242, 242,0.5); border:1px solid grey;" />
+                            <br />
+                            Email :
+                            <br />
+                            <input type="text" id="userEmail" name="userEmail" value="@userEmail" style="background-color: rgba(242, 242, 242,0.5); border:1px solid grey;" />
+                            <br />
+                            Contact Number :
+                            <br />
+                            <input type="tel" id="userPhone" name="userPhone" value="@userPhone" style="background-color: rgba(242, 242, 242,0.5); border:1px solid grey;" />
+                            <br />
+                            <Label id="loc"> Location : </Label>
+                            <br />
+                            <input type="text" id="location" name="location" value="@userLocation" style="background-color: rgba(242, 242, 242,0.5); border:1px solid grey;" />
+                            <br />
+                        </div>
+                        <br />
+                    </div>
+
+                    <div class="col col-md-2 my-sm-auto" style="border:none;">
+
+
+                        Delivery : @Html.RadioButton("MOD", "Delivery", new { onclick = "show2()" })
+
+                        <br />
+
+                        Takeaway: @Html.RadioButton("MOD", "Takeaway", new { onclick = "show1()" })
+
+                        @Html.Hidden("deliver")
+                        @Html.Hidden("deliverCost", value: 0)
+
+                        <br />
+
+                    </div>
+                    <div class="col col-md-3 text-center">
+                        @{
+                            List<Cart> temp = (List<Cart>)Session["Cart"];
+                            var subtotal = temp.Sum(x => x.Quantity * x.Menu.price);
+                            var servcharge = subtotal * 4 / 100;
+                            var tax = (subtotal + servcharge) * 8 / 100;
+                            var delcost = ViewBag.Cost;
+                            var cost = Convert.ToDecimal(delcost);
+                            var totalbill = subtotal + servcharge + tax + cost;
+                            var del = ViewBag.Method;
+
+                        }
+
+
+
+                        Subtotal : @subtotal
+                        <br />
+                        Service Chg (4%): @servcharge
+                        <br />
+                        Tax (8%) : @tax
+                        <br />
+                        Delivery Chg: <label id="delchgs"> @cost </label> <br /> 
+                        <br />
+                        ---------------------------------- <br />
+                        <input type="number" id="billval" value="@totalbill" readonly hidden />
+                        Total Bill   :  <label id="totalbill"> @totalbill </label> <br />
+                        ----------------------------------
+
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+
+                    <a href="@Url.Action("Index", "Menus")" class="btn btn-secondary"> Back to Menu </a>
+                        <input type="submit" id="updatecart" value="Update Cart" class="btn btn-warning" onclick="show3()"/>
+                        <a href="@Url.Action("PaymentWithPaypal", "ShoppingCart", new { userid = userID, deliver = del, cost = delcost})" class="btn btn-primary" id="paypalbutton"> Pay with Paypal </a>
+                    
+                </div>
+            }
+        }
+
+        else
+        {
+            <hr />
+
+            <h4 class="text-center"> No items in cart!! </h4>
+
+            <hr />
+
+            <a href="@Url.Action("Index","Menus")" class="btn btn-secondary"> Back to Menu </a>
+        }
+
+    }
+   
+<hr />
+
+</div>
+
+
+
+
+<style>
+    #FlagRow {
+        min-height: 100px;
+        border: 1px solid black;
+    }
+
+    #CheckoutAndLocation {
+        min-height: 75px;
+        border: 1px solid black;
+    }
+
+    #SriLankanMenuButton {
+        background-image: url(../../Content/SLFlag.jpg);
+        border-right: 1px solid black;
+        background-size: cover;
+        font-size: 50px;
+        text-align: center;
+        padding: 7px;
+    }
+
+
+    #ChineseMenuButton {
+        background-image: url(../../Content/ChineseFlag.jpg);
+        background-size: cover;
+        font-size: 50px;
+        text-align: center;
+        padding: 7px;
+    }
+
+    #TitleBar div {
+        font-size: larger;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        border: 1px solid black;
+    }
+
+
+    #CheckoutBar div {
+        font-size: larger;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        border: 1px solid black;
+        padding-top: 10px;
+    }
+</style>
+
+<div id="map"> </div>
+
+
+@section Scripts{
+
+    <script>
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                mapTypeControl: false,
+                center: { lat: 6.888902, lng: 79.858131 }, //esoft location
+                zoom: 13
+            });
+
+            new AutocompleteDirectionsHandler(map);
+        }
+
+        function AutocompleteDirectionsHandler(map) {
+            this.map = map;
+            this.originPlaceId = 'ChIJAZYZA8Nb4joRi21RZRPjIK4'; // esoft place id
+            this.destinationPlaceId = null;
+            this.travelMode = 'DRIVING';
+            this.directionsService = new google.maps.DirectionsService;
+            this.directionsDisplay = new google.maps.DirectionsRenderer;
+            this.directionsDisplay.setMap(map);
+
+            var destinationInput = document.getElementById('location');
+            var modeSelector = 'DRIVING';
+
+            var destinationAutocomplete =
+                new google.maps.places.Autocomplete(destinationInput);
+            destinationAutocomplete.setFields(['place_id']);
+
+            this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+            this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+        }
+
+
+        AutocompleteDirectionsHandler.prototype.setupClickListener = function (
+            id, mode) {
+            var radioButton = document.getElementById(id);
+            var me = this;
+
+            radioButton.addEventListener('click', function () {
+                me.travelMode = mode;
+                me.route();
+            });
+        };
+
+        AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (
+            autocomplete, mode) {
+            var me = this;
+            autocomplete.bindTo('bounds', this.map);
+
+            autocomplete.addListener('place_changed', function () {
+                var place = autocomplete.getPlace();
+
+                if (!place.place_id) {
+                    window.alert('Please select an option from the dropdown list.');
+                    return;
+                }
+                if (mode === 'ORIG') {
+                    me.originPlaceId = place.place_id;
+                } else {
+                    me.destinationPlaceId = place.place_id;
+                }
+                me.route();
+            });
+        };
+
+        AutocompleteDirectionsHandler.prototype.route = function () {
+            if (!this.originPlaceId || !this.destinationPlaceId) {
+                return;
+            }
+            var me = this;
+
+            this.directionsService.route(
+                {
+                    origin: { 'placeId': this.originPlaceId },
+                    destination: { 'placeId': this.destinationPlaceId },
+                    travelMode: this.travelMode
+                },
+                function (response, status) {
+                    if (status === 'OK') {
+                        // Display the distance:
+                        var distance = ((response.routes[0].legs[0].distance.value) / 1000).toFixed(0);
+                        if (distance > 3) {
+
+                            document.getElementById('deliverCost').value = 0;
+                            window.alert('Sorry you are out of our delivery radius!!');
+                            document.getElementById('paypalbutton').style.display = 'none';
+                        }
+                        else {
+
+                            var delivery = Number(distance * 50).toFixed(2);
+                            document.getElementById('deliverCost').value = delivery;
+                            document.getElementById('delchgs').innerHTML = delivery;
+                            var bill = parseFloat(document.getElementById('billval').value);
+                            var totalbill = Number(bill) + Number(delivery);
+                            document.getElementById('totalbill').innerHTML = totalbill.toFixed(2);
+
+                        }
+
+                        me.directionsDisplay.setDirections(response);
+
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+        };
+
+    </script>
+    <script src=@GoogleApi async defer></script>
+
+    <script>
+        //Show & hide takeaway & delivery details
+        function show1() {
+            document.getElementById('location').style.display = 'none';
+            document.getElementById('loc').style.display = 'none';
+            document.getElementById('deliver').value = "Takeaway";
+            document.getElementById('paypalbutton').style.display = 'inline';
+
+
+        }
+        function show2() {
+            document.getElementById('location').style.display = 'inline';
+            document.getElementById('loc').style.display = 'inline';
+            document.getElementById('deliver').value = "Delivery";
+        }
+
+        function show3() {
+
+         alert("Customer Details Saved -- Please proceed with checkout!!")
+            
+        }
+
+    </script>
+
+}

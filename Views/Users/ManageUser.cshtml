@@ -1,0 +1,64 @@
+﻿@model PagedList.IPagedList<CafateriaSystem.Models.User>
+@using PagedList.Mvc;
+
+<hr />
+@using (Html.BeginForm("AdminPanel", "Users", FormMethod.Get))
+{
+    <p>
+        Find user by name: @Html.TextBox("SearchUser", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Availability
+        </th>
+        <th>
+            Manage Users
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.user_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.user_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.user_id })
+            </td>
+        </tr>
+    }
+
+</table>
+<hr />
+<p>
+    <a href="@Url.Action("Create", "Users")" class="btn btn-success"> Add New User </a>
+</p>
+<hr />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@if (Model.PageCount > 1)
+{
+    <div class="pagination justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("AdminUserPanel", "Users", new { page }))
+    </div>
+}
+

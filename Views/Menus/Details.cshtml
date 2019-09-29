@@ -1,0 +1,45 @@
+﻿@model CafateriaSystem.Models.Menu
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="col-md-6" style=" text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; background-color: rgba(242, 242, 242,0.3)">
+        <hr />
+        <strong>Item Details</strong>
+        <hr />
+        <div>
+            <dl class="dl-horizontal">
+             
+                <dd>
+                   <strong> Style : </strong> @Html.DisplayFor(model => model.menu_category)
+                </dd>
+
+                <dd>
+                    <strong> Category : </strong> @Html.DisplayFor(model => model.sub_catergory)
+                </dd>
+
+                <dd>
+                    <strong> Name : </strong> @Html.DisplayFor(model => model.name)
+                </dd>
+
+                <dd>
+                    <strong> Description : </strong> @Html.DisplayFor(model => model.description)
+                </dd>
+
+                <dd>
+                    <strong> Price : </strong> @Html.DisplayFor(model => model.price)
+                </dd>
+
+                <dd>
+                    <strong> Quantity : </strong>  @Html.DisplayFor(model => model.quantity)
+                </dd>
+            </dl>
+        </div>
+        <p>
+            <a href="@Url.Action("Edit", "Menus", new { id = Model.menu_id })" class="btn btn-warning"> Edit </a>
+            <a href="@Url.Action("AdminMenuPanel", "Users")" class="btn btn-primary"> Back </a>
+        </p>
+        <br />
+</div>

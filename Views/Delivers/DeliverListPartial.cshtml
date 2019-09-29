@@ -1,0 +1,55 @@
+﻿@using CafateriaSystem.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Deliver>
+
+
+
+@foreach (var item in Model)
+{
+    <div class="row" style="min-height:40px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.5); border:1px solid black;">
+
+        <div class="col col-md-1" style=" text-align:center; font-size: larger; font-family: Arial, Helvetica, sans-serif; border-right:1px solid black; border-bottom:1px solid black;">
+            @item.order_id
+
+        </div>
+
+        <div class="col col-md-1" style=" text-align:center; font-size: larger; font-family: Arial, Helvetica, sans-serif; border-right:1px solid black; border-bottom:1px solid black;">
+            @item.dispatch_time
+
+        </div>
+
+        <div class="col col-md-3 " style="font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border-right:1px solid black; border-bottom:1px solid black;">
+
+            @Html.Action("OrderCustomerDetails", "Orders", new { id = item.order_id })
+        </div>
+        <div class="col col-md-3 " style="font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border-right:1px solid black; border-bottom:1px solid black;">
+            @Html.Action("OrderDetailListPartial", "OrderDetails", new { id = item.order_id })
+        </div>
+
+        <div class="col col-md-1 " style="font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border-right:1px solid black; border-bottom:1px solid black;">
+            @item.deliver_status
+        </div>
+
+        <div class="col col-md-3 " style="font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border-right:1px solid black; border-bottom:1px solid black;">
+            @{var slash = " | "; }
+
+            @if (item.deliver_status != "In Progress")
+            {
+                @Html.ActionLink("Pick-up", "Pickup", new { id = item.deliver_id, oid = item.order_id }) @slash
+            }
+
+            @Html.ActionLink("Delivered", "Delivered", new { id = item.deliver_id, oid = item.order_id })
+
+        </div>
+    </div>
+}
+
+
+<hr />
+
+<div class="pagination d-flex justify-content-center text-white" id="MenuPageination">
+    @Html.PagedListPager(Model, page => Url.Action("DeliveryAgentPanel", new { page = page }))
+</div>
+
+<hr />
+

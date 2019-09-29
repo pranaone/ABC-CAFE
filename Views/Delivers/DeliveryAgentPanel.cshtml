@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CafateriaSystem.Models.Deliver>
+@{
+    ViewBag.Title = "DeliveryAgentPanel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container-fluid" style="background-color:ghostwhite; margin-top:25px; padding:0; background-color: rgba(242, 242, 242,0)">
+        <div class="row d-flex justify-content-center" style="min-height:50px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3); color:darkorange; text-shadow:5px 5px 5px #000000; border:1px solid black;" id="TitleBar">
+            <h1>
+                @if (Session["UserName"] != null)
+                {<text> Welcome @Session["UserName"].ToString() !! </text>}
+            </h1>
+        </div>
+        <div class="row" style="min-height:40px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.5)">
+            <div class="col col-md-1" style="text-align:center; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black; border-right:0;">
+                <b>Order ID</b>
+            </div>
+
+            <div class="col col-md-1" style="text-align:center; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black; border-right:0;">
+                <b>Order Time</b>
+            </div>
+            <div class="col col-md-3" style="text-align:center; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black;">
+                <b>Customer Details</b>
+            </div>
+            <div class="col col-md-3" style="text-align:center; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black;">
+                <b>Order Items</b>
+            </div>
+            <div class="col col-md-1 " style="font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border: 1px solid black; border-left:0px;">
+                <b>Status</b>
+            </div>
+            <div class="col col-md-3" style="border-left:0px; font-size: larger; font-family: Arial, Helvetica, sans-serif; text-align: center; border: 1px solid black; border-left:0px;">
+                <b>Manage</b>
+            </div>
+        </div>
+
+        @*----------------------With the given format below--------------------------------*@
+
+        @Html.Action("DeliverListPartial", "Delivers")
+
+        @*----------------------Your code must generate the above group of items with respective values between these green tags with no container additional container--------------------------------*@
+
+        <a href="@Url.Action("SignOut","Users")" class="btn btn-danger"> Sign Out </a>
+
+    </div>
+

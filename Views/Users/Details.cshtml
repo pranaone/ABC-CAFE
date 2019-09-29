@@ -1,0 +1,37 @@
+﻿@model CafateriaSystem.Models.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="col-md-6" style=" text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; background-color: rgba(242, 242, 242,0.3)">
+        <hr />
+        <strong>Staff User Details</strong>
+        <hr />
+        <div>
+            <dl class="dl-horizontal">
+
+                <dd>
+                    <strong> Name : </strong> @Html.DisplayFor(model => model.name)
+                </dd>
+
+                <dd>
+                    <strong> Role : </strong> @Html.DisplayFor(model => model.user_role)
+                </dd>
+
+                <dd>
+                    <strong> Contact : </strong> @Html.DisplayFor(model => model.phone)
+                </dd>
+
+                <dd>
+                    <strong> Availability : </strong> @Html.DisplayFor(model => model.status)
+                </dd>
+            </dl>
+        </div>
+        <p>
+            <a href="@Url.Action("Edit", "Users", new { id = Model.user_id })" class="btn btn-warning"> Edit </a>
+            <a href="@Url.Action("AdminUserPanel", "Users")" class="btn btn-primary"> Back </a>
+        </p>
+        <br />
+    </div>

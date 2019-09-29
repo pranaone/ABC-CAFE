@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CafateriaSystem.Models.Deliver>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.dispatch_time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.deliver_status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.deliver_method)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User1.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.dispatch_time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.deliver_status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.deliver_method)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User1.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.deliver_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.deliver_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.deliver_id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<CafateriaSystem.Models.Menu>
+
+
+@foreach (var item in Model)
+{
+    @Html.DisplayFor(modelItem => item.name)
+
+    @Html.DisplayFor(modelItem => item.quantity)
+
+    @Html.ActionLink("Edit", "Edit", new { id = item.menu_id }) |
+    @Html.ActionLink("Details", "Details", new { id = item.menu_id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.menu_id })
+}

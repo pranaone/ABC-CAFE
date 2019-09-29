@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "AdminPanel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container-fluid" style="background-color:ghostwhite; margin-top:25px; padding:0; background-color: rgba(242, 242, 242,0)">
+    <div class="row d-flex justify-content-center" style="min-height:50px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3); color:darkorange; text-shadow:5px 5px 5px #000000; border:1px solid black;" id="TitleBar">
+        <h1>
+            @if (Session["UserName"] != null)
+            {<text> Welcome @Session["UserName"].ToString() </text>}
+        </h1>
+    </div>
+
+
+
+    <div class="row" style="min-height:100px; margin:0; padding:0; background-color: rgba(242, 242, 242,0.3)">
+        <div class="col-md-9" style=" text-align:center; font-size: large; font-family: Arial, Helvetica, sans-serif; border: 1px solid black;">
+            
+            
+
+        </div>
+
+
+        <div class="col-md-3" style=" text-align:left; font-size: larger; font-family: Arial, Helvetica, sans-serif; border: 1px solid black;">
+
+            <div class="row d-flex justify-content-center" style=" text-align:left; font-family: Arial, Helvetica, sans-serif; font-size:large;">
+                <br />
+                
+                <dl class="dl-horizontal">
+                    <hr />
+                    <dt>
+
+                        <a href="@Url.Action("AdminMenuPanel","Users")" class="btn btn-secondary"> Manage Menu </a>
+
+                    </dt>
+                    <hr />
+                    <dt>
+                        <a href="@Url.Action("AdminUserPanel","Users")" class="btn btn-secondary"> Manage User </a>
+                    </dt>
+                    <hr />
+                    <dt>
+                        <a href="@Url.Action("AdminDeliveriesPanel","Users")" class="btn btn-secondary"> Monitor Deliveries </a>
+                    </dt>
+                    <hr />
+                    <dt>
+                        <a href="@Url.Action("AdminPaymentsPanel","Users")" class="btn btn-secondary">Monitor Payments </a>
+                    </dt>
+                    <hr />
+                    <dt>
+                        <a href="@Url.Action("SignOut","Users")" class="btn btn-danger"> Sign Out </a>
+                    </dt>
+                    <hr />
+                </dl>
+                      
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

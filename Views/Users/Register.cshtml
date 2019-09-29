@@ -1,0 +1,98 @@
+﻿@model CafateriaSystem.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid d-flex align-content-center" style="margin-top:25px; padding:0; background-color: rgba(242, 242, 242,0)">
+
+    <div class="container-fluid d-flex align-self-center;" style="background-color:rgba(31, 15, 15,0.2);  padding:15px; align-self:center; border:2px solid rgba(255,255,255,0.2);">
+        <div class="container col-sm-4 align-content-center" style="background-color: rgba(255, 255, 255,0);">
+            <hr style="background-color:white;" />
+            <h3 style="color:white; text-decoration-style:solid; text-decoration-color:black; margin-bottom:15px; "> Register </h3>
+            <hr style="background-color:white;" />
+            @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+            {
+                if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Success!</strong>@ViewBag.Message
+                    </div>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal align-content-center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <h6 style="color:white;">Name: </h6>
+                            <div>
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h6 style="color:white;">Email: </h6>
+                            <div>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "email" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                @Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h6 style="color:white;">Phone: </h6>
+                            <div>
+                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", type = "tel" } })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h6 style="color:white;">Address: </h6>
+                            <div>
+                                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h6 style="color:white;">Password: </h6>
+                            <div>
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h6 style="color:white;">Confirm Password: </h6>
+                            <div>
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Register" class="btn btn-success" />
+                        </div>
+                    </div>
+                    if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Error!</strong>@ViewBag.Message
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+    </div>
+
+@if (TempData["Error"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@TempData["Error"].ToString()");
+        };
+    </script>
+}

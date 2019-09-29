@@ -1,0 +1,30 @@
+﻿@using CafateriaSystem.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Menu>
+
+    <div class="row">
+        @{foreach (var item in Model)
+            {
+                if(item.quantity != 0)
+                {
+                    <div class="col-3 mt-3 mr-3">
+                    <div class="card row">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.name</h5>
+                                    <img src="@Url.Action("Image", "Menus" , new { id = item.menu_id })" class="rounded-circle z-depth-0" height="100">
+                                    <p class="card-text">@item.description</p>
+                                    <p class="card-text"> Rs.@item.price</p>
+                                    <a href="@Url.Action("OrderNow", "ShoppingCart", new { id = item.menu_id })" class="btn btn-warning">Add to Cart</a>
+                                </div>
+                    </div>
+                </div>
+                }   
+            }
+        }
+    </div>
+
+    <hr />
+       
+    <div class="pagination d-flex justify-content-center" id="MenuPageination">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+     </div>
